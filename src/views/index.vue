@@ -88,11 +88,23 @@ export default {
 </script>
 
 <style lang="scss">
-#index {
+body:before {
+  content: "";
   background: url("../assets/banner.jpg");
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+}
+#index {
+  // background: url("../assets/banner.jpg");
+  // background-size: cover;
+  // background-position: center;
+  // background-attachment: fixed;
   header {
     background-color: rgba(0, 0, 0, 0.2);
     nav {
@@ -228,7 +240,7 @@ export default {
   }
   .silebar-enter-active,
   .silebar-leave-active {
-    transition: all .5s;
+    transition: all 0.5s;
   }
 
   .silebar-enter,
