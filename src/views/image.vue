@@ -28,9 +28,6 @@
 </template>
 
 <script>
-// import imgUrl from "../assets/logo.png"
-// import imgUrl2 from "../assets/banner.jpg"
-// import imgUrl3 from "../assets/welcome.jpg"
 
 export default {
   data() {
