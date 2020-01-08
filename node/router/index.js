@@ -17,7 +17,7 @@ router.post('/test', async (ctx, next) => {
 router.post('/getImage', async (ctx, next) => {
     var names = getImage.getImageFiles("./dist/image/");
     var urls = names.map((item,index) => {
-        return "http://localhost:80/image/" + item;
+        return "./image/" + item;
     })
     ctx.response.body = {
         code: "00",
