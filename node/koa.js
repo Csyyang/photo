@@ -19,7 +19,7 @@ app.use(bodyParser())
 var pass = ['/index', '/login','/isLogin','/']
 app.use(async (ctx, next) => {
     var CanNum = pass.indexOf(ctx.url);
-    console.log(CanNum)
+    console.log(ctx.url)
     if (CanNum == "-1") {
         console.log(ctx.session.user)
         if (!ctx.session.user) {

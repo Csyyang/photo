@@ -14,7 +14,8 @@ if(debug) {
       }
     }
   }
-} else {
+} 
+else {
   var obj = {
     devServer: {
       proxy: {

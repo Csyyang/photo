@@ -10,6 +10,9 @@ import qs from 'qs'
 Vue.config.productionTip = "devtools";
 Vue.config.productionTip = false
 Vue.prototype.$axios = async function (url, parms) {
+  if (process.env.NODE_ENV != 'development') {
+    url = url.slice(4);
+  }
   parms = qs.stringify(parms);
   var res = await axios.post(url, parms);
   return res;
@@ -17,6 +20,7 @@ Vue.prototype.$axios = async function (url, parms) {
 
 // http response 响应拦截器
 axios.interceptors.response.use(response => {
+
   var first = app.$store.state.first;
   if (response.data.code == "03") {
     if (!first) {//是否为第一次登录主页
