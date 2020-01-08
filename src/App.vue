@@ -8,6 +8,11 @@
 export default {
   name: 'app',
   components: {
+  },
+  async created() {
+    //是否登录
+    var res = await this.$axios("/api/isLogin", {});
+      this.$store.commit("AlreadyLogin",res.data.state)
   }
 }
 </script>

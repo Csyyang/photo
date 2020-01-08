@@ -40,6 +40,9 @@ input{
     margin: 0;
     outline: none;
     padding: 0;
+    border: none;
+   outline: none;
+   -webkit-appearance: none;
 }
 input::-webkit-input-placeholder{
     color: #ccc;

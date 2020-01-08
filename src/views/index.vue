@@ -13,7 +13,7 @@
             <router-link :class="{ line: checked == 1 }" @click.native="checked = 1" to="/">博文</router-link>
           </li>
           <li>
-            <router-link :class="{ line: checked == 2 }" @click.native="checked = 2" to="/">关于我</router-link>
+            <a :class="{ line: checked == 2 }" @click="login">{{ state }}</a>
           </li>
           <li @click="showSidebar = !showSidebar">
             <svg t="1578016042541" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5379" data-spm-anchor-id="a313x.7781069.0.i3" width="200" height="200">
@@ -26,7 +26,7 @@
         <div class="content">
           <h1>羊羊羊的博客</h1>
           <div class="text">欢迎来到羊羊的博客鸭，随意点击need鼠标</div>
-          <button class="know-me">了解我</button>
+          <button class="know-me" @click="test">了解我</button>
           <div class="more">更多</div>
           <p class="move">
             <svg t="1578032503701" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1627" id="mx_n_1578032503703" data-spm-anchor-id="a313x.7781069.0.i6" width="32" height="32">
@@ -67,7 +67,7 @@
     <transition name="silebar">
       <div class="sidebar" v-show="showSidebar">
         <ul>
-          <li>1</li>
+          <li @click="goImage">相册</li>
           <li>2</li>
           <li>3</li>
         </ul>
@@ -81,7 +81,33 @@ export default {
   data() {
     return {
       checked: 0,
-      showSidebar: false
+      showSidebar: false,
+      state: "未登录"
+    }
+  },
+  created() {
+    this.state = this.AlreadyLogin?"已登录":"未登录";
+  },
+  computed: {
+    AlreadyLogin() {
+      return this.$store.state.AlreadyLogin;
+    }
+  },
+  methods: {
+    login() {
+      this.checked = 2;
+      if(!this.AlreadyLogin) {
+        this.$router.push('/login');
+      }
+    },
+    goImage() {
+      this.$router.push('./image');
+    },
+    async test() {
+      var res = await this.$axios("/api/test", {
+        res: "csc"
+      });
+      window.console.log(res);
     }
   }
 }
@@ -101,10 +127,6 @@ body:before {
   z-index: -1;
 }
 #index {
-  // background: url("../assets/banner.jpg");
-  // background-size: cover;
-  // background-position: center;
-  // background-attachment: fixed;
   header {
     background-color: rgba(0, 0, 0, 0.2);
     nav {
@@ -125,6 +147,7 @@ body:before {
         display: flex;
         justify-content: space-between;
         a {
+          color: #fff;
           display: inline-block;
           line-height: 50px;
         }
