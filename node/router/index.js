@@ -1,22 +1,37 @@
 const router = require('koa-router')();
 const getImageFiles = require('../getImage')
+const multer = require('koa-multer')
+
+var storage = multer.diskStorage({
+    //文件保存路径
+    destination: function (req, file, cb) {
+        cb(null, 'dist/image/')
+    },
+    //修改文件名称
+    filename: function (req, file, cb) {
+        var fileFormat = (file.originalname).split(".");  //以点分割成数组，数组的最后一项就是后缀名
+        cb(null, Date.now() + "." + fileFormat[fileFormat.length - 1]);
+    }
+})
+//加载配置
+var upload = multer({ storage: storage });
 
 var person = {
     csy: "202020",
     jjj: "202020"
 }
 //测试接口
-router.post('/test', async (ctx, next) => {
-    // var a = getImage.getImageFiles("./dist/img/")
-    // console.log(a)
+router.post('/test', (ctx, next) => {
+    // console.log(ctx.req)
     ctx.response.body = {
         code: "00"
     }
 })
 //获取图片
 router.post('/getImage', async (ctx, next) => {
+    console.log(ctx)
     var names = await getImageFiles("./dist/image/");
-    var urls = names.map((item,index) => {
+    var urls = names.map((item, index) => {
         return "http://localhost:80/image/" + item;
     })
     ctx.response.body = await {
@@ -25,9 +40,20 @@ router.post('/getImage', async (ctx, next) => {
         urls
     };
 })
+//上传图片
+router.post('/upLoadImg', upload.single('file'), async (ctx, next) => {
+    console.log(ctx.req.file)
+    ctx.response.body = {
+        code: '00',
+        message: {
+            url: 'http://localhost:80/image/' + ctx.req.file.filename,
+            name: ctx.req.file.filename
+        },
+    }
+})
 //查询是否已经登录
-router.post('/isLogin', async (ctx,next) => {
-    if(ctx.session.user) {
+router.post('/isLogin', async (ctx, next) => {
+    if (ctx.session.user) {
         ctx.response.body = {
             code: "00",
             text: "已登录",

@@ -9,12 +9,19 @@ import qs from 'qs'
 
 Vue.config.productionTip = "devtools";
 Vue.config.productionTip = false
-Vue.prototype.$axios = async function (url, parms) {
+
+Vue.prototype.$axios2 = axios;
+Vue.prototype.$axios = async function (url, parms, header) {
   if (process.env.NODE_ENV != 'development') {
     url = url.slice(4);
   }
-  parms = qs.stringify(parms);
-  var res = await axios.post(url, parms);
+  // parms = qs.stringify(parms);
+  if(header) {
+    var res = await axios.post(url, parms, header);
+
+  } else {
+    var res = await axios.post(url, parms);
+  }
   return res;
 }
 
