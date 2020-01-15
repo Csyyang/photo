@@ -32,11 +32,11 @@ router.get('/', (ctx,next) => {
 })
 //获取图片
 router.post('/getImage', async (ctx, next) => {
-    console.log(ctx)
     var names = await getImageFiles("./dist/image/");
     var urls = names.map((item, index) => {
-        return "http://localhost:80/image/" + item;
+        return "/image/" + item;
     })
+    console.log(urls)
     ctx.response.body = await {
         code: "00",
         text: "获取图片成功",
@@ -49,7 +49,7 @@ router.post('/upLoadImg', upload.single('file'), async (ctx, next) => {
     ctx.response.body = {
         code: '00',
         message: {
-            url: 'http://localhost:80/image/' + ctx.req.file.filename,
+            url: 'image/' + ctx.req.file.filename,
             name: ctx.req.file.filename
         },
     }
