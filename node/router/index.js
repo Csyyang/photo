@@ -1,5 +1,5 @@
 const router = require('koa-router')();
-const getImage = require('../getImage')
+const getImageFiles = require('../getImage')
 
 var person = {
     csy: "202020",
@@ -7,22 +7,22 @@ var person = {
 }
 //测试接口
 router.post('/test', async (ctx, next) => {
-    var a = getImage.getImageFiles("./dist/img/")
-    console.log(a)
+    // var a = getImage.getImageFiles("./dist/img/")
+    // console.log(a)
     ctx.response.body = {
         code: "00"
     }
 })
 //获取图片
 router.post('/getImage', async (ctx, next) => {
-    var names = getImage.getImageFiles("./dist/image/");
+    var names = await getImageFiles("./dist/image/");
     var urls = names.map((item,index) => {
-        return "./image/" + item;
+        return "http://localhost:80/image/" + item;
     })
-    ctx.response.body = {
+    ctx.response.body = await {
         code: "00",
         text: "获取图片成功",
-        urls: urls
+        urls
     };
 })
 //查询是否已经登录
@@ -50,6 +50,7 @@ router.post('/login', async (ctx, next) => {
             text: "已登录"
         }
     } else {
+        console.log(cusr)
         var cusr = ctx.request.body.user;
         var password = ctx.request.body.password
         if (password != undefined && password == person[cusr]) {

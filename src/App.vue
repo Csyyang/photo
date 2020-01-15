@@ -20,6 +20,7 @@ export default {
 <style>
 #app,
 #app > div:first-child {
+  overflow: scroll;
   width: 100%;
   height: 100%;
   box-sizing: border-box;

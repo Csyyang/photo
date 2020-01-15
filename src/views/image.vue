@@ -1,33 +1,28 @@
 <template>
   <div id="image">
     <div style="height: 44px">
-      <header>
-        <div class="return" @click="goback">
-          <p class="icon">
-            <svg t="1578395710688" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2513" width="32" height="32">
-              <path d="M766.862 1021.724c-10.24 0-20.594-3.64-28.444-10.922L228.693 538.396c-15.701-14.563-15.701-38.229 0-52.792L738.418 13.198c15.701-14.563 41.187-14.563 56.889 0 15.701 14.564 15.701 38.23 0 52.793L314.027 512l481.28 446.009c15.701 14.563 15.701 38.23 0 52.793-7.851 7.282-18.205 10.922-28.445 10.922z" p-id="2514" fill="#D86666"></path>
+      <mheader title="相册">
+        <template v-slot:other>
+          <p class="other-icon" @click="$router.push('/upload')">
+            <svg t="1578554837064" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1988" width="23" height="23">
+              <path d="M881 512c0-52.4 32.9-96.8 79-114.5-11-43.2-28-83.9-50.2-121.3C864.6 296.3 810 288.1 773 251c-37-37-45.2-91.7-25.1-136.8C710.4 92 669.7 75 626.5 64c-17.8 46.1-62.2 79-114.5 79-52.4 0-96.8-32.9-114.5-79-43.2 11-83.9 28-121.3 50.2 20.1 45.2 11.9 99.8-25.1 136.8-37 37-91.7 45.2-136.8 25.2C92 313.6 75 354.3 64 397.5c46.1 17.8 79 62.2 79 114.5 0 52.4-32.9 96.8-79 114.5 11 43.2 28 83.9 50.2 121.3C159.4 727.7 214 735.9 251 773c37 37 45.2 91.7 25.1 136.8C313.6 932 354.3 949 397.5 960c17.8-46.1 62.2-79 114.5-79 52.4 0 96.8 32.9 114.5 79 43.2-11 83.9-28 121.3-50.2-20.1-45.2-11.9-99.8 25.1-136.8 37-37 91.7-45.2 136.8-25.2C932 710.4 949 669.7 960 626.5c-46.1-17.7-79-62.1-79-114.5zM512 635c-67.9 0-123-55.1-123-123s55.1-123 123-123 123 55.1 123 123-55.1 123-123 123z" p-id="1989" fill="#D86666"></path>
             </svg>
           </p>
-        </div>
-        <div class="title">
-          <p>相册</p>
-        </div>
-        <div class="other"></div>
-      </header>
+        </template>
+      </mheader>
     </div>
     <div class="photo">
       <div class="box">
-       <template v-for="(item,index) in urls">
-          <el-image  :src="item" :key="index" :preview-src-list="urls"></el-image>
-       </template>
-        
-        
+        <template v-for="(item,index) in urls">
+          <el-image :src="item" :key="index" :preview-src-list="urls"></el-image>
+        </template>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import mheader from '../components/header.vue'
 
 export default {
   data() {
@@ -35,15 +30,13 @@ export default {
       urls: []
     }
   },
-  async created() {
-    var res = await this.$axios('/api/getImage',{});
-    if(res.data.code == "00") {
-      this.urls = res.data.urls;
-    }
+  components: {
+    mheader
   },
-  methods: {
-    goback() {
-      this.$router.go(-1);
+  async created() {
+    var res = await this.$axios('/api/getImage', {});
+    if (res.data.code == "00") {
+      this.urls = res.data.urls;
     }
   }
 }
@@ -52,47 +45,29 @@ export default {
 <style lang="scss">
 #image {
   background: rgb(91, 61, 61);
-  header {
-    background: #4a3434;
-    display: flex;
-    position: fixed;
-    height: 40px;
-    width: 100%;
-    top: 0;
-    div {
-      height: 100%;
-      width: 50px;
-      flex: 1;
-    }
-    .return {
-      .icon {
-        transform: translateY(2px);
-        width: 23px;
+ .other-icon {
+        position: absolute;
+        right: 12px;
+        top: 9px;
+        width: 20px;
       }
-    }
-    .title p {
-      text-align: center;
-      color: rgba(216, 102, 102, 0.7);
-      line-height: 40px;
-    }
-  }
   .photo {
     overflow: scroll;
     width: 100%;
     height: calc(100% - 44px);
     .box {
-        box-sizing: border-box;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        &::after {
-            content: "";
-            width: 30%
-        }
-        div.el-image {
-            width: 30%;
-            max-height: 150px;
-        }
+      box-sizing: border-box;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      &::after {
+        content: "";
+        width: 30%;
+      }
+      div.el-image {
+        width: 30%;
+        max-height: 150px;
+      }
     }
   }
 }

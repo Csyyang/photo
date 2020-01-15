@@ -17,7 +17,7 @@ app.use(session(session_configs.session_config, app))//使用session
 app.use(bodyParser())
 //权限白名单
 var pass = ['/index', '/login','/isLogin','/']
-app.use(async (ctx, next) => {
+app.use(async (ctx, next) => {//前置登录校验
     var CanNum = pass.indexOf(ctx.url);
     console.log(ctx.url)
     if (CanNum == "-1") {
@@ -29,10 +29,10 @@ app.use(async (ctx, next) => {
                 state: false
             }
         } else {
-            next();
+            await next();
         }
     } else {
-        next();
+        await next();
     }
 });
 
