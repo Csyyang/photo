@@ -29,13 +29,13 @@ export default {
       this.$refs.upload.submit();
     },
     startUpload(parm) {
-      // window.console.log(parm)
-      let _this = this;
       let file = parm.file;
       let fileTyep = file.type;
       let isImage = fileTyep.indexOf('image') != -1;
+      console.log(fileTyep,isImage)
       if (!isImage) {
         console.log("请上传图片")
+        return
       }
       this.uploadFile(file);
     },

@@ -66,7 +66,7 @@ export default {
       }
       div.el-image {
         width: 30%;
-        max-height: 150px;
+        height: 150px;
       }
     }
   }
