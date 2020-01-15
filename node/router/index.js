@@ -27,6 +27,9 @@ router.post('/test', (ctx, next) => {
         code: "00"
     }
 })
+router.get('/', (ctx,next) => {
+    ctx.response.redirect('/dist');
+})
 //获取图片
 router.post('/getImage', async (ctx, next) => {
     console.log(ctx)
