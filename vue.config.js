@@ -6,7 +6,7 @@ var obj = {
   //     publicPath: '/dist/'
   //   }
   // },
-  publicPath: '/dist/',
+  publicPath: '/photo/',
   lintOnSave: false,
   devServer: {
     proxy: {

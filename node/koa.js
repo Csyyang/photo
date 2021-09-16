@@ -9,7 +9,9 @@ const session_configs = require('./config.js');//session配置文件
 
 const app = new koa();
 app.use(statics(
-    path.join(__dirname, './dist')
+    path.join(__dirname, './dist'), {
+        maxage: 3600 * 1000
+    }
 ))
 
 app.keys = session_configs.session_signed_key;
@@ -38,5 +40,5 @@ app.use(async (ctx, next) => {//前置登录校验
 
 
 
-app.use(router.routes()).listen(80);
+app.use(router.routes()).listen(8080);
 

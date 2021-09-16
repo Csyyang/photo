@@ -1,6 +1,7 @@
 const router = require('koa-router')();
 const getImageFiles = require('../getImage')
 const multer = require('koa-multer')
+const path = require('path')
 
 var storage = multer.diskStorage({
     //文件保存路径
@@ -27,14 +28,12 @@ router.post('/test', (ctx, next) => {
         code: "00"
     }
 })
-router.get('/', (ctx,next) => {
-    ctx.response.redirect('/dist');
-})
+
 //获取图片
 router.post('/getImage', async (ctx, next) => {
-    var names = await getImageFiles("./dist/image/");
+    var names = await getImageFiles(path.resolve(__dirname, "../dist/image/"));
     var urls = names.map((item, index) => {
-        return "/image/" + item;
+        return "/photo/image/" + item;
     })
     console.log(urls)
     ctx.response.body = await {

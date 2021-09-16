@@ -13,7 +13,7 @@ Vue.config.productionTip = false
 Vue.prototype.$axios2 = axios;
 Vue.prototype.$axios = async function (url, parms, header) {
   if (process.env.NODE_ENV != 'development') {
-    url = url.slice(4);
+    url ='/photo' +  url.slice(4);
   }
   // parms = qs.stringify(parms);
   if(header) {
