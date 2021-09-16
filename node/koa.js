@@ -38,5 +38,5 @@ app.use(async (ctx, next) => {//前置登录校验
 
 
 
-app.use(router.routes()).listen(80);
+app.use(router.routes()).listen(8080);
 
